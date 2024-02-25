@@ -1,6 +1,6 @@
 // Login.js
 import React from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
+import { View, TextInput, Button } from 'react-native';
 
 const Login = ({ navigation }) => {
   return (
@@ -14,7 +14,7 @@ const Login = ({ navigation }) => {
         secureTextEntry={true}
         style={{ marginBottom: 10, padding: 10, borderWidth: 1, borderColor: 'gray', width: 200 }}
       />
-      <Button title="Login" onPress={() => navigation.navigate('Home')} />
+      <Button title="Login" onPress={() => navigation.navigate('BottomNav')} />
       <Button title="Go to Register" onPress={() => navigation.navigate('Register')} />
     </View>
   );
