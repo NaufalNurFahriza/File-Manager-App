@@ -1,13 +1,14 @@
-// Profile.js
 import React from 'react';
-import { View, Button } from 'react-native';
+import {View, Text} from 'react-native';
 
-const Profile = ({ navigation }) => {
+export default function Profile({navigation}) {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Button title="Logout" onPress={() => navigation.navigate('Login')} />
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Text
+        onPress={() => navigation.navigate('Home')}
+        style={{fontSize: 26, fontWeight: 'bold'}}>
+        Profile screen
+      </Text>
     </View>
   );
-};
-
-export default Profile;
+}
