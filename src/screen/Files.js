@@ -1,13 +1,13 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 
-export default function Details({navigation}) {
+export default function Files({navigation}) {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text
         onPress={() => navigation.navigate('Home')}
         style={{fontSize: 26, fontWeight: 'bold'}}>
-        Details screen
+        Files Screen
       </Text>
     </View>
   );
