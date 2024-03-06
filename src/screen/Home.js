@@ -1,174 +1,101 @@
 import React, {useEffect} from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  KeyboardAvoidingView,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, ScrollView, Image, TouchableOpacity, FlatList} from 'react-native';
 import {styles} from './Style';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import {dataList} from '../data/data';
 
 export default function Home({navigation}) {
+  const renderItem = ({item}) => (
+    <View
+      style={{
+        width: '100%',
+        height: 60,
+        backgroundColor: '#FFFFFF',
+        borderBottomColor: 'gray',
+        borderBottomWidth: 1,
+        flexDirection: 'row',
+        alignSelf: 'center',
+        alignItems: 'center',
+        paddingLeft: 14,
+      }}>
+      <TouchableOpacity>{item.icon}</TouchableOpacity>
+      <Text
+        style={{
+          fontFamily: 'Montserrat',
+          marginLeft: 14,
+          fontWeight: '500',
+          fontSize: 14,
+          lineHeight: 17,
+        }}>
+        {item.name}
+      </Text>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingBottom: 10}}>
         <View style={styles.header}>
-        <View style={styles.photoBag}>
-  <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-    <Image
-      source={require('../assets/images/photoProfile.png')}
-      style={{
-        width: 45,
-        height: 45,
-        resizeMode: 'contain',
-      }}
-    />
-  </TouchableOpacity>
-  <TouchableOpacity onPress={() => navigation.navigate('Files')}>
-    <Image
-      source={require('../assets/images/photoProfile.png')}
-      style={{
-        width: 24,
-        height: 24,
-        resizeMode: 'contain',
-      }}
-    />
-  </TouchableOpacity>
-</View>
-
-
-          <View style={styles.textHeader}>
-            <Text
-              style={{
-                fontSize: 15,
-                color: '#034262',
-                fontFamily: 'Montserrat',
-                fontStyle: 'normal',
-                fontWeight: '500',
-                marginVertical: 5,
-              }}>
-              Hello Fahri!
-            </Text>
-            <Text
-              style={{
-                fontSize: 20,
-                color: '#0A0827',
-                fontFamily: 'Montserrat',
-                fontStyle: 'normal',
-                fontWeight: '700',
-              }}>
-              Ingin merawat dan perbaiki sepatumu? cari disini
-            </Text>
-          </View>
-
-          <View style={styles.searchFilter}>
-            <View
-              style={{
-                justifyContent: 'center',
-                paddingLeft: 10,
-                width: 275,
-                height: 45,
-                backgroundColor: '#F6F8FF',
-                borderRadius: 13,
-              }}>
-              <Image
-                source={require('../assets/images/photoProfile.png')}
-                style={{
-                  width: 24,
-                  height: 24,
-                  resizeMode: 'contain',
-                }}
-              />
-            </View>
-            <View
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: 45,
-                height: 45,
-                backgroundColor: '#F6F8FF',
-                borderRadius: 13,
-              }}>
-              <Image
-                source={require('../assets/images/photoProfile.png')}
-                style={{
-                  width: 24,
-                  height: 24,
-                  resizeMode: 'contain',
-                }}
-              />
-            </View>
-          </View>
+          <Image
+            source={require('../assets/images/ArsipkuWhite.png')}
+            style={{width: 106, height: 26}}
+          />
         </View>
         <View style={styles.categoryBox}>
-          <View style={styles.categoryItems}>
-            <TouchableOpacity>
-              <Image
-                source={require('../assets/images/photoProfile.png')}
-                style={{
-                  width: 45,
-                  height: 45,
-                  resizeMode: 'contain',
-                }}
-              />
-              <Text
-                style={{
-                  fontSize: 9,
-                  color: '#BB2427',
-                  fontWeight: '600',
-                  textAlign: 'center',
-                  marginTop: 10,
-                }}>
-                Sepatu
-              </Text>
-            </TouchableOpacity>
+          <View style={styles.categoryItems1}>
+            <View style={styles.categoryItems2}>
+              <TouchableOpacity>
+                <AntDesign name="addfolder" size={24} color="gray" />
+              </TouchableOpacity>
+            </View>
+            <Text
+              style={{
+                fontSize: 11,
+                color: 'blue',
+                fontWeight: '600',
+                textAlign: 'center',
+                marginTop: 10,
+              }}>
+              New Folder
+            </Text>
           </View>
-          <View style={styles.categoryItems}>
-            <TouchableOpacity>
-              <Image
-                source={require('../assets/images/photoProfile.png')}
-                style={{
-                  width: 45,
-                  height: 45,
-                  resizeMode: 'contain',
-                }}
-              />
-              <Text
-                style={{
-                  fontSize: 9,
-                  color: '#BB2427',
-                  fontWeight: '600',
-                  textAlign: 'center',
-                  marginTop: 10,
-                }}>
-                Jaket
-              </Text>
-            </TouchableOpacity>
+
+          <View style={styles.categoryItems1}>
+            <View style={styles.categoryItems2}>
+              <TouchableOpacity>
+                <AntDesign name="addfile" size={24} color="gray" />
+              </TouchableOpacity>
+            </View>
+            <Text
+              style={{
+                fontSize: 11,
+                color: 'blue',
+                fontWeight: '600',
+                textAlign: 'center',
+                marginTop: 10,
+              }}>
+              Add File
+            </Text>
           </View>
-          <View style={styles.categoryItems}>
-            <TouchableOpacity>
-              <Image
-                source={require('../assets/images/photoProfile.png')}
-                style={{
-                  width: 45,
-                  height: 45,
-                  resizeMode: 'contain',
-                }}
-              />
-              <Text
-                style={{
-                  fontSize: 9,
-                  color: '#BB2427',
-                  fontWeight: '600',
-                  textAlign: 'center',
-                  marginTop: 10,
-                }}>
-                Tas
-              </Text>
-            </TouchableOpacity>
+
+          <View style={styles.categoryItems1}>
+            <View style={styles.categoryItems2}>
+              <TouchableOpacity>
+                <AntDesign name="pdffile1" size={24} color="gray" />
+              </TouchableOpacity>
+            </View>
+            <Text
+              style={{
+                fontSize: 11,
+                color: 'blue',
+                fontWeight: '600',
+                textAlign: 'center',
+                marginTop: 10,
+              }}>
+              Convert File
+            </Text>
           </View>
         </View>
         <View style={styles.recomendBox}>
@@ -184,22 +111,17 @@ export default function Home({navigation}) {
                   fontSize: 16,
                   color: '#0A0827',
                   fontWeight: '600',
-                  marginRight: 75,
+                  marginRight: 215,
                 }}>
-                Rekomendasi Terdekat
-              </Text>
-              <Text
-                style={{
-                  fontSize: 14,
-                  color: '#E64C3C',
-                  fontWeight: '500',
-                  marginLeft: 75,
-                }}>
-                View All
+                Recent Files
               </Text>
             </View>
           </View>
-          <View style={styles.boxList}></View>
+          <FlatList
+            data={dataList}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+          />
         </View>
       </ScrollView>
       {/* <TouchableOpacity

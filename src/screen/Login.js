@@ -69,7 +69,7 @@ const Login = ({ navigation }) => {
                 marginTop: 15,
                 justifyContent: 'space-between',
               }}>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
@@ -81,7 +81,7 @@ const Login = ({ navigation }) => {
                   }}>
                   Forgot Password?
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             <TouchableOpacity
               style={{

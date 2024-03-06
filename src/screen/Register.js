@@ -117,7 +117,7 @@ const Register = ({navigation}) => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}
-              onPress={() => navigation.navigate('Login')}>
+              onPress={() => navigation.navigate('BottomNav')}>
               <Text
                 style={{
                   color: '#fff',

@@ -5,10 +5,10 @@ export const styles = StyleSheet.create({
         flex: 1, backgroundColor: '#F6F8FF',
     },
     header: {
-        paddingTop: 56,
+        paddingTop: 24,
         paddingHorizontal: 20,
-        paddingBottom:28,
-        backgroundColor: '#FFFFFF'
+        paddingBottom:48,
+        backgroundColor: '#2563EB'
 
     },
     photoBag: {
@@ -20,26 +20,24 @@ export const styles = StyleSheet.create({
     textHeader: {
 
     },
-    searchFilter: {
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingTop: 15,
-    },
     categoryBox: {
         paddingHorizontal: 10,
         paddingTop: 15,
         paddingBottom: 5,
         marginVertical: 5,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'space-around'
     },
-    categoryItems: {
+    categoryItems1: {
+        flexDirection: 'column',
+    },
+    categoryItems2: {
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 16,
-        width: 95,
-        height: 95,
+        borderRadius: 30,
+        width: 60,
+        height: 60,
         backgroundColor: '#FFFFFF',
         marginHorizontal: 15,
         marginVertical: 10,
@@ -50,7 +48,8 @@ export const styles = StyleSheet.create({
         
     },
     recomendText: {
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
         flexDirection: 'row',
         paddingBottom: 20,
     },
@@ -225,7 +224,7 @@ export const styles = StyleSheet.create({
       },
       boxList: {
         width: '100%',
-        flexDirection: 'row',
+        flexDirection: 'column',
         alignItems: 'center',
         backgroundColor: '#F6F8FF',
         paddingVertical: 15,
