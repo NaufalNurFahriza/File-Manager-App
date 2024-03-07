@@ -3,7 +3,6 @@ import {
   View,
   ScrollView,
   TextInput,
-  Button,
   Text,
   TouchableOpacity,
   Image,
@@ -32,129 +31,53 @@ const Register = ({navigation}) => {
               height: 220,
             }}
           />
-          <View
-            style={{
-              width: '100%',
-              backgroundColor: '#fff',
-              borderTopLeftRadius: 19,
-              borderTopRightRadius: 19,
-              paddingHorizontal: 20,
-              paddingTop: 28,
-              marginTop: -20,
-            }}>
-            <Text
-              style={{
-                color: 'black',
-                fontWeight: 'bold',
-                fontSize: 24,
-                marginVertical: 15,
-              }}>
+          <View className="w-full bg-white rounded-t-2xl px-5 pt-7 -mt-5">
+            <Text className="text-gray-900 font-bold text-2xl my-4">
               Welcome, Please create your account
             </Text>
-            <Text style={{color: 'blue', fontWeight: 'bold'}}>Nama</Text>
+            <Text className="text-blue-900 font-bold text-sm">Nama</Text>
             <TextInput
               placeholder="Masukkan Nama"
-              style={{
-                marginTop: 15,
-                width: '100%',
-                borderRadius: 8,
-                backgroundColor: '#F6F8FF',
-                paddingHorizontal: 10,
-              }}
+              className="my-4 w-full rounded-lg bg-slate-100 px-3"
               keyboardType="default"
             />
-
-            <Text style={{color: 'blue', fontWeight: 'bold'}}>Email</Text>
+            <Text className="text-blue-900 font-bold text-sm">Email</Text>
             <TextInput
               placeholder="Masukkan Email"
-              style={{
-                marginTop: 15,
-                width: '100%',
-                borderRadius: 8,
-                backgroundColor: '#F6F8FF',
-                paddingHorizontal: 10,
-              }}
+              className="my-4 w-full rounded-lg bg-slate-100 px-3"
               keyboardType="email-address"
             />
-
-            <Text style={{color: 'blue', fontWeight: 'bold', marginTop: 15}}>
-              Password
-            </Text>
+            <Text className="text-blue-900 font-bold text-sm">Password</Text>
             <TextInput
               placeholder="Masukkan Password"
               secureTextEntry={true}
-              style={{
-                marginTop: 15,
-                width: '100%',
-                borderRadius: 8,
-                backgroundColor: '#F6F8FF',
-                paddingHorizontal: 10,
-              }}
+              className="my-4 w-full rounded-lg bg-slate-100 px-3"
             />
-
-            <Text style={{color: 'blue', fontWeight: 'bold', marginTop: 15}}>
+            <Text className="text-blue-900 font-bold text-sm">
               Confirm Password
             </Text>
             <TextInput
-              placeholder="Masukkan Ulang Password"
-              secureTextEntry={true}
-              style={{
-                marginTop: 15,
-                width: '100%',
-                borderRadius: 8,
-                backgroundColor: '#F6F8FF',
-                paddingHorizontal: 10,
-              }}
+              placeholder="Masukkan Nomor Handphone"
+              className="my-4 w-full rounded-lg bg-slate-100 px-3"
+              keyboardType="numeric"
             />
-
             <TouchableOpacity
-              style={{
-                width: '100%',
-                marginTop: 30,
-                backgroundColor: '#243bbb',
-                borderRadius: 8,
-                paddingVertical: 15,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
+              className="w-full rounded-lg my-6 py-4 bg-blue-800 justify-center items-center"
               onPress={() => navigation.navigate('BottomNav')}>
-              <Text
-                style={{
-                  color: '#fff',
-                  fontSize: 16,
-                  fontWeight: 'bold',
-                }}>
-                Register
-              </Text>
+              <Text className="text-white font-bold text-lg">Register</Text>
             </TouchableOpacity>
-          </View>
-
-          <View
-            style={{
-              width: '100%',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: 20,
-              flexDirection: 'row',
-            }}>
-            <Text
-              style={{
-                fontSize: 12,
-                color: '#717171',
-              }}>
-              already have an account?
-            </Text>
-            <TouchableOpacity>
-              <Text
-                style={{
-                  fontSize: 14,
-                  color: '#243bbb',
-                  marginLeft: 5,
-                }}
-                onPress={() => navigation.navigate('Login')}>
-                Login
+            <View className="w-full justify-center items-center my-3 flex-row">
+              <Text className="text-md text-gray-600">
+                already have an account?
               </Text>
-            </TouchableOpacity>
+              <TouchableOpacity>
+                <Text
+                  className="text-md text-blue-900 font-medium ml-1"
+                  onPress={() => navigation.navigate('Login')}>
+                  Login
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </KeyboardAvoidingView>
       </ScrollView>

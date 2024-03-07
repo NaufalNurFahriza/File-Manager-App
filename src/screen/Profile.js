@@ -58,53 +58,8 @@ const Profile = ({navigation}) => {
         </View>
         <View style={styles.menuProfile}>
           <View style={styles.settingProfile}>
-            <Text
-              style={{
-                fontSize: 16,
-                color: '#000000',
-                fontWeight: '500',
-                marginTop: 18,
-              }}>
+            <Text className="text-slate-800 text-lg font-semibold my-4">
               About
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                color: '#000000',
-                fontWeight: '500',
-                marginTop: 37,
-              }}>
-              Terms & Condition
-            </Text>
-            <TouchableOpacity>
-              <Text
-                style={{
-                  fontSize: 16,
-                  color: '#000000',
-                  fontWeight: '500',
-                  marginTop: 37,
-                }}>
-                FAQ
-              </Text>
-            </TouchableOpacity>
-            <Text
-              style={{
-                fontSize: 16,
-                color: '#000000',
-                fontWeight: '500',
-                marginTop: 37,
-              }}>
-              History
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                color: '#000000',
-                fontWeight: '500',
-                marginTop: 37,
-                marginBottom: 27,
-              }}>
-              Setting
             </Text>
           </View>
         </View>
