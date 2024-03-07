@@ -16,7 +16,7 @@ const Register = ({navigation}) => {
   const [password, setPassword] = useState('');
 
   return (
-    <View style={{flex: 1, backgroundColor: '#fff'}}>
+    <View className="flex-1 bg-slate-100">
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingBottom: 10}}>
@@ -25,7 +25,7 @@ const Register = ({navigation}) => {
           enabled
           keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}>
           <Image
-            source={require('../assets/images/landingImage.png')}
+            source={require('../assets/images/Book_Pattern4.png')}
             style={{
               width: Dimensions.get('window').width,
               height: 220,

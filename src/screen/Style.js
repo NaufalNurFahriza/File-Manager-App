@@ -45,6 +45,7 @@ export const styles = StyleSheet.create({
     recomendBox: {
         paddingHorizontal: 20,
         paddingTop:5,
+        backgroundColor:'green'
         
     },
     recomendText: {

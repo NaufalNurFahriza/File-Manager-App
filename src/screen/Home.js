@@ -1,121 +1,95 @@
 import React, {useEffect} from 'react';
-import {View, Text, ScrollView, Image, TouchableOpacity, FlatList} from 'react-native';
-import {styles} from './Style';
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  FlatList,
+  ImageBackground,
+} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {dataList} from '../data/data';
+import LinearGradient from 'react-native-linear-gradient';
 
 export default function Home({navigation}) {
   const renderItem = ({item}) => (
-    <View
-      style={{
-        width: '100%',
-        height: 60,
-        backgroundColor: '#FFFFFF',
-        borderBottomColor: 'gray',
-        borderBottomWidth: 1,
-        flexDirection: 'row',
-        alignSelf: 'center',
-        alignItems: 'center',
-        paddingLeft: 14,
-      }}>
-      <TouchableOpacity>{item.icon}</TouchableOpacity>
-      <Text
-        style={{
-          fontFamily: 'Montserrat',
-          marginLeft: 14,
-          fontWeight: '500',
-          fontSize: 14,
-          lineHeight: 17,
-        }}>
-        {item.name}
-      </Text>
+    <View className="w-full py-5 bg-white flex-row items-center justify-between px-4 border-b-2 border-b-slate-100">
+      <TouchableOpacity className="flex-row items-center">
+        <View>{item.icon}</View>
+        <Text className="text-sm font-medium ml-4">{item.name}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity className="rotate-90 w-6 h-6">
+        <AntDesign name="ellipsis1" size={24} color="gray" />
+      </TouchableOpacity>
     </View>
   );
 
   return (
-    <View style={styles.container}>
+    <View className="flex-1 bg-slate-100">
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingBottom: 10}}>
-        <View style={styles.header}>
+        <ImageBackground
+          source={require('../assets/images/ArsipBg.png')}
+          resizeMode="cover"
+          className="px-6 py-6 h-44">
           <Image
             source={require('../assets/images/ArsipkuWhite.png')}
             style={{width: 106, height: 26}}
           />
-        </View>
-        <View style={styles.categoryBox}>
-          <View style={styles.categoryItems1}>
-            <View style={styles.categoryItems2}>
-              <TouchableOpacity>
-                <AntDesign name="addfolder" size={24} color="gray" />
-              </TouchableOpacity>
-            </View>
-            <Text
-              style={{
-                fontSize: 11,
-                color: 'blue',
-                fontWeight: '600',
-                textAlign: 'center',
-                marginTop: 10,
-              }}>
+        </ImageBackground>
+
+        <View className="bg-slate-50 px-5 py-4 flex-row items-center justify-around">
+          <View className="flex-col items-center">
+            <TouchableOpacity>
+              <LinearGradient
+                start={{x: 0, y: 1}}
+                end={{x: 1, y: 0}}
+                colors={['#F5C62C', '#FD5B4B']}
+                className="items-center justify-center rounded-full w-[60px] h-[60px]">
+                <AntDesign name="addfolder" size={24} color="white" />
+              </LinearGradient>
+            </TouchableOpacity>
+            <Text className="text-sm font-semibold text-stone-900 pt-4">
               New Folder
             </Text>
           </View>
-
-          <View style={styles.categoryItems1}>
-            <View style={styles.categoryItems2}>
-              <TouchableOpacity>
-                <AntDesign name="addfile" size={24} color="gray" />
-              </TouchableOpacity>
-            </View>
-            <Text
-              style={{
-                fontSize: 11,
-                color: 'blue',
-                fontWeight: '600',
-                textAlign: 'center',
-                marginTop: 10,
-              }}>
+          <View className="flex-col items-center">
+            <TouchableOpacity>
+              <LinearGradient
+                start={{x: 0, y: 1}}
+                end={{x: 1, y: 0}}
+                colors={['#D8E474', '#62C654']}
+                className="items-center justify-center rounded-full w-[60px] h-[60px]">
+                <AntDesign name="addfile" size={24} color="white" />
+              </LinearGradient>
+            </TouchableOpacity>
+            <Text className="text-sm font-semibold text-stone-900 pt-4">
               Add File
             </Text>
           </View>
-
-          <View style={styles.categoryItems1}>
-            <View style={styles.categoryItems2}>
-              <TouchableOpacity>
-                <AntDesign name="pdffile1" size={24} color="gray" />
-              </TouchableOpacity>
-            </View>
-            <Text
-              style={{
-                fontSize: 11,
-                color: 'blue',
-                fontWeight: '600',
-                textAlign: 'center',
-                marginTop: 10,
-              }}>
+          <View className="flex-col items-center">
+            <TouchableOpacity>
+              <LinearGradient
+                start={{x: 0, y: 1}}
+                end={{x: 1, y: 0}}
+                colors={['#8FF8D4', '#16AAFB']}
+                className="items-center justify-center rounded-full w-[60px] h-[60px]">
+                <AntDesign name="pdffile1" size={24} color="white" />
+              </LinearGradient>
+            </TouchableOpacity>
+            <Text className="text-sm font-semibold text-stone-900 pt-4">
               Convert File
             </Text>
           </View>
         </View>
-        <View style={styles.recomendBox}>
-          <View
-            style={{
-              justifyContent: 'space-between',
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <View style={styles.recomendText}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  color: '#0A0827',
-                  fontWeight: '600',
-                  marginRight: 215,
-                }}>
-                Recent Files
-              </Text>
-            </View>
+
+        <View className="px-5 py-5">
+          <View className="pb-5">
+            <Text className="text-base text-stone-900 font-semibold">
+              Recent Files
+            </Text>
           </View>
           <FlatList
             data={dataList}
