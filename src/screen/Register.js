@@ -54,7 +54,7 @@ const Register = ({navigation}) => {
               className="my-4 w-full rounded-lg bg-slate-100 px-3"
             />
             <Text className="text-blue-900 font-bold text-sm">
-              Confirm Password
+              Phone Number
             </Text>
             <TextInput
               placeholder="Masukkan Nomor Handphone"

@@ -14,7 +14,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 export default function Home({navigation}) {
   const renderItem = ({item}) => (
-    <View className="w-full py-5 bg-white flex-row items-center justify-between px-4 border-b-2 border-b-slate-100">
+    <View className="w-full py-5 bg-white flex-row items-center justify-between px-4 border-b-2 border-b-slate-100 rounded-sm">
       <TouchableOpacity className="flex-row items-center">
         <View>{item.icon}</View>
         <Text className="text-sm font-medium ml-4">{item.name}</Text>

@@ -1,72 +1,58 @@
 import React, {useEffect} from 'react';
-import {View, Text, ScrollView, Image, TouchableOpacity, FlatList} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  FlatList,
+  ImageBackground,
+} from 'react-native';
 import {styles} from './Style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {dataList} from '../data/data';
+import LinearGradient from 'react-native-linear-gradient';
 
 export default function Files({navigation}) {
   const renderItem = ({item}) => (
-    <View
-      style={{
-        width: '100%',
-        height: 60,
-        backgroundColor: '#FFFFFF',
-        borderBottomColor: 'gray',
-        borderBottomWidth: 1,
-        flexDirection: 'row',
-        alignSelf: 'center',
-        alignItems: 'center',
-        paddingLeft: 14,
-      }}>
-      <TouchableOpacity>{item.icon}</TouchableOpacity>
-      <Text
-        style={{
-          fontFamily: 'Montserrat',
-          marginLeft: 14,
-          fontWeight: '500',
-          fontSize: 14,
-          lineHeight: 17,
-        }}>
-        {item.name}
-      </Text>
+    <View className="w-full py-5 bg-white flex-row items-center justify-between px-4 border-b-2 border-b-slate-100 rounded-sm">
+      <TouchableOpacity className="flex-row items-center">
+        <View>{item.icon}</View>
+        <Text className="text-sm font-medium ml-4">{item.name}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity className="rotate-90 w-6 h-6">
+        <AntDesign name="ellipsis1" size={24} color="gray" />
+      </TouchableOpacity>
     </View>
   );
 
   return (
-    <View style={styles.container}>
+    <View className="flex-1 bg-slate-100">
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingBottom: 10}}>
-        <View style={styles.header}>
-        <Text
-              style={{
-                fontSize: 24,
-                color: 'white',
-                fontWeight: '600',
-              }}>
-              File Manager
-            </Text>
-        </View>
-        <View style={styles.recomendBox}>
-          <View
-            style={{
-              justifyContent: 'space-between',
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <View style={styles.recomendText}>
+        <ImageBackground
+          source={require('../assets/images/Book_Pattern2.png')}
+          resizeMode="cover"
+          className=" h-44">
+          <LinearGradient
+            start={{x: 0, y: 1}}
+            end={{x: 1, y: 0}}
+            colors={['rgba(9, 136, 224, 0.45)', 'rgba(5, 74, 122, 0.85)']}
+            className="px-6 py-6 h-44">
+            <Text className="text-white text-2xl font-bold">File Manager</Text>
+          </LinearGradient>
+        </ImageBackground>
+        <View className="px-5 py-5">
+
+            <TouchableOpacity className="pb-5 flex-row items-center">
               <Text
-                style={{
-                  fontSize: 16,
-                  color: '#0A0827',
-                  fontWeight: '600',
-                  marginRight: 10,
-                }}>
-                A - Z 
+                className="text-base text-stone-900 font-semibold pr-3">
+                A - Z
               </Text>
-              <AntDesign name="caretdown" size={16} color="#0A0827" />
-            </View>
-          </View>
+              <AntDesign name="caretdown" size={16} className="bg-stone-900 " />
+            </TouchableOpacity>
+
           <FlatList
             data={dataList}
             renderItem={renderItem}
