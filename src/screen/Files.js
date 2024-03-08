@@ -8,7 +8,6 @@ import {
   FlatList,
   ImageBackground,
 } from 'react-native';
-import {styles} from './Style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {dataList} from '../data/data';
 import LinearGradient from 'react-native-linear-gradient';

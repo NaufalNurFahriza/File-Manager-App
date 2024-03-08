@@ -70,7 +70,7 @@ const Login = ({navigation}) => {
               </TouchableOpacity>
             </View> */}
             <TouchableOpacity
-              className="w-full rounded-lg my-6 py-4 bg-blue-800 justify-center items-center"
+              className="w-full rounded-lg my-6 py-3 bg-blue-800 justify-center items-center"
               onPress={() => navigation.navigate('BottomNav')}>
               <Text className="text-white font-bold text-lg">Login</Text>
             </TouchableOpacity>

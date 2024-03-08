@@ -6,136 +6,87 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  ImageBackground,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 import {styles} from './Style';
+import LinearGradient from 'react-native-linear-gradient';
 
 export default function EditProfile({navigation}) {
   return (
-    <View style={{flex: 1, backgroundColor: '#FFFFFF'}}>
-      <View
-        style={{
-          width: '100%',
-          height: 60,
-          backgroundColor: '#FFFFFF',
-          flexDirection: 'row',
-          alignSelf: 'center',
-          alignItems: 'center',
-          paddingLeft: 14,
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 1,
-          },
-          shadowOpacity: 0.22,
-          shadowRadius: 2.22,
-
-          elevation: 3,
-        }}>
+    <View className="flex-1 bg-slate-200">
+      <View className="w-full h-16 bg-white flex-row self-center items-center pl-3 shadow-md">
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={24} color="#243bbb" />
         </TouchableOpacity>
-        <Text
-          style={{
-            fontFamily: 'Montserrat',
-            marginLeft: 14,
-            fontWeight: '700',
-            fontSize: 18,
-            lineHeight: 17,
-          }}>
+        <Text className="ml-3 font-bold text-lg text-stone-600">
           Edit Profile
         </Text>
       </View>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingBottom: 10}}>
-        <View style={styles.editProfile}>
-          <Image
-            source={require('../assets/images/photoProfile.png')}
-            style={{
-              width: 95.11,
-              height: 95.11,
-              resizeMode: 'contain',
-            }}
-          />
-          <View style={styles.editButton}>
-            <TouchableOpacity>
-              <View style={{flexDirection: 'row'}}>
-                {/* <Image
-                  source={require('../assets/icon/Edit_ic.png')}
-                  style={{
-                    width: 20,
-                    height: 20,
-                  }}
-                /> */}
-                <Text
-                  style={{
-                    fontSize: 18,
-                    color: '#243bbb',
-                    fontWeight: '500',
-                    marginLeft: 15,
-                    marginTop: -1,
-                  }}>
-                  Edit Foto
-                </Text>
+        <ImageBackground
+          source={require('../assets/images/Book_Pattern.png')}
+          resizeMode="cover"
+          className="h-60">
+          <LinearGradient
+            start={{x: 1, y: 0}}
+            end={{x: 1, y: 1}}
+            colors={['rgba(5, 74, 122, 0.85)', 'rgba(10, 136, 225, 0.75)']}
+            className="px-6 py-6 h-60">
+            <View className="py-10 items-center">
+              <Image
+                source={require('../assets/images/photoProfile.png')}
+                className="w-28 h-28 object-contain my-3 border-2 border-black"
+              />
+              <View className="bg-blue-500 items-center my-4 px-4 py-2 rounded-3xl">
+                <TouchableOpacity>
+                  <View className="flex-row items-center">
+                    <MaterialIcons name="edit" size={20} color="white" />
+                    <Text className="text-base text-white font-medium ml-2">
+                      Edit Photo
+                    </Text>
+                  </View>
+                </TouchableOpacity>
               </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.editBio}>
-          <View style={{marginBottom: 25}}>
-            <Text style={{color: 'blue', fontWeight: 'bold'}}>Nama</Text>
-            <TextInput //component yang digunakan untuk memasukkan data yang kita inginkan
-              placeholder="Fahrii Fahriza" //pada tampilan ini, kita ingin user memasukkan email
-              style={{
-                marginTop: 10,
-                width: '100%',
-                borderRadius: 8,
-                backgroundColor: '#F6F8FF',
-                paddingHorizontal: 10,
-              }}
-              keyboardType="default" //akan muncul tombol @ pada keyboard yang nanti akan memudahkan user mengisi email
+            </View>
+          </LinearGradient>
+        </ImageBackground>
+
+        <View className="px-6 py-6">
+          <View className="mb-6">
+            <Text className="text-blue-700 font-bold">Nama</Text>
+            <TextInput
+              placeholder="Agus Susanto"
+              className="w-full mt-3 rounded-lg bg-slate-50 px-3"
+              keyboardType="default"
             />
           </View>
-          <View style={{marginBottom: 25}}>
-            <Text style={{color: 'blue', fontWeight: 'bold'}}>Email</Text>
-            <TextInput //component yang digunakan untuk memasukkan data yang kita inginkan
-              placeholder="fahriifahriza@gmail.com" //pada tampilan ini, kita ingin user memasukkan email
-              style={{
-                marginTop: 10,
-                width: '100%',
-                borderRadius: 8,
-                backgroundColor: '#F6F8FF',
-                paddingHorizontal: 10,
-              }}
-              keyboardType="email-address" //akan muncul tombol @ pada keyboard yang nanti akan memudahkan user mengisi email
+
+          <View className="mb-6">
+            <Text className="text-blue-700 font-bold">Email</Text>
+            <TextInput
+              placeholder="agussusanto@gmail.com"
+              className="w-full mt-3 rounded-lg bg-slate-50 px-3"
+              keyboardType="email-address"
             />
           </View>
-          <View style={{marginBottom: 25}}>
-            <Text style={{color: 'blue', fontWeight: 'bold'}}>No hp</Text>
-            <TextInput //component yang digunakan untuk memasukkan data yang kita inginkan
-              placeholder="08124564879" //pada tampilan ini, kita ingin user memasukkan email
-              style={{
-                marginTop: 10,
-                width: '100%',
-                borderRadius: 8,
-                backgroundColor: '#F6F8FF',
-                paddingHorizontal: 10,
-              }}
-              keyboardType="default" //akan muncul tombol @ pada keyboard yang nanti akan memudahkan user mengisi email
+
+          <View className="mb-6">
+            <Text className="text-blue-700 font-bold">Phone Number</Text>
+            <TextInput
+              placeholder="081245678972"
+              className="w-full mt-3 rounded-lg bg-slate-50 px-3"
+              keyboardType="numeric"
             />
           </View>
-        </View>
-        <View style={styles.simpanButton}>
-          <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-            <Text
-              style={{
-                fontSize: 16.5,
-                color: '#FFFFFF',
-                fontWeight: '700',
-              }}>
-              Simpan
-            </Text>
+          <TouchableOpacity
+            className="w-full rounded-lg my-6 py-3 bg-blue-700 justify-center items-center"
+            onPress={() => navigation.navigate('Profile')}>
+            <Text className="text-white font-bold text-lg">Save</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
