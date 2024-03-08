@@ -9,16 +9,10 @@ const Splash = ({navigation}) => {
   }, []);
 
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: '#fff',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
+    <View className="flex-1 bg-white justify-center items-center ">
       <Image
         source={require('../assets/images/splashLogo.png')}
-        style={{width: 150, height: 174, resizeMode: 'contain'}}
+        className="W-[150] H-[174] object-contain"
       />
     </View>
   );

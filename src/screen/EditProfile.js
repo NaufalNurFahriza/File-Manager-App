@@ -10,8 +10,6 @@ import {
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
-import {styles} from './Style';
 import LinearGradient from 'react-native-linear-gradient';
 
 export default function EditProfile({navigation}) {

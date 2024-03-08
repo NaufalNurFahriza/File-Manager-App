@@ -7,6 +7,7 @@ import Register from './screen/Register';
 import BottomNav from './BottomNav';
 import EditProfile from './screen/EditProfile';
 import Splash from './screen/Splash';
+import About from './screen/About';
 const Stack = createNativeStackNavigator();
 
 const Routing = () => {
@@ -18,6 +19,7 @@ const Routing = () => {
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="BottomNav" component={BottomNav} />
         <Stack.Screen name="EditProfile" component={EditProfile} />
+        <Stack.Screen name="About" component={About} />
       </Stack.Navigator>
     </NavigationContainer>
   );

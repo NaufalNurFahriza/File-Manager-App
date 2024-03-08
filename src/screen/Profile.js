@@ -52,7 +52,7 @@ const Profile = ({navigation}) => {
             Edit Profile
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity className="bg-white my-2 rounded-xl items-center flex-row px-6">
+        <TouchableOpacity onPress={() => navigation.navigate('About')} className="bg-white my-2 rounded-xl items-center flex-row px-6">
           <Ionicons name="information-circle-sharp" size={36} color="gray" />
           <Text className="text-stone-900 text-lg font-semibold my-4 ml-6">
             About
