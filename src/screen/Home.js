@@ -42,6 +42,7 @@ export default function Home({navigation}) {
 
         <View className="bg-slate-50 px-5 py-4 flex-row items-center justify-around">
           <View className="flex-col items-center">
+
             <TouchableOpacity>
               <LinearGradient
                 start={{x: 0, y: 1}}
@@ -51,11 +52,13 @@ export default function Home({navigation}) {
                 <AntDesign name="addfolder" size={24} color="white" />
               </LinearGradient>
             </TouchableOpacity>
+
             <Text className="text-sm font-semibold text-stone-900 pt-4">
               New Folder
             </Text>
           </View>
           <View className="flex-col items-center">
+
             <TouchableOpacity>
               <LinearGradient
                 start={{x: 0, y: 1}}
@@ -65,12 +68,14 @@ export default function Home({navigation}) {
                 <AntDesign name="addfile" size={24} color="white" />
               </LinearGradient>
             </TouchableOpacity>
+
             <Text className="text-sm font-semibold text-stone-900 pt-4">
               Add File
             </Text>
           </View>
           <View className="flex-col items-center">
-            <TouchableOpacity>
+
+            <TouchableOpacity onPress={() => navigation.navigate('ConvertFile')}>
               <LinearGradient
                 start={{x: 0, y: 1}}
                 end={{x: 1, y: 0}}
@@ -79,6 +84,7 @@ export default function Home({navigation}) {
                 <AntDesign name="pdffile1" size={24} color="white" />
               </LinearGradient>
             </TouchableOpacity>
+
             <Text className="text-sm font-semibold text-stone-900 pt-4">
               Convert File
             </Text>
