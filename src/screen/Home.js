@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -11,8 +11,16 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {dataList} from '../data/data';
 import LinearGradient from 'react-native-linear-gradient';
+import { ModalNewFolder } from './modal/ModalNewFolder';
+import { ModalAddFile } from './modal/ModalAddFile';
 
 export default function Home({navigation}) {
+  const [modalFolder, setModalFolder] = useState(false);
+  const [modalFile, setModalFile] = useState(false);
+
+  const handleCloseModal = () => {
+    setModalFolder(false) || setModalFile(false)
+  };
   const renderItem = ({item}) => (
     <View className="w-full py-5 bg-white flex-row items-center justify-between px-4 border-b-2 border-b-slate-100 rounded-sm">
       <TouchableOpacity className="flex-row items-center">
@@ -27,6 +35,14 @@ export default function Home({navigation}) {
 
   return (
     <View className="flex-1 bg-slate-100">
+      <ModalNewFolder
+      show={modalFolder}
+      onClose={handleCloseModal}
+      />
+      <ModalAddFile
+      show={modalFile}
+      onClose={handleCloseModal}
+      />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingBottom: 10}}>
@@ -43,7 +59,9 @@ export default function Home({navigation}) {
         <View className="bg-slate-50 px-5 py-4 flex-row items-center justify-around">
           <View className="flex-col items-center">
 
-            <TouchableOpacity>
+            <TouchableOpacity 
+            onPress={() => {setModalFolder(true)}}
+            >
               <LinearGradient
                 start={{x: 0, y: 1}}
                 end={{x: 1, y: 0}}
@@ -59,7 +77,9 @@ export default function Home({navigation}) {
           </View>
           <View className="flex-col items-center">
 
-            <TouchableOpacity>
+            <TouchableOpacity
+            onPress={() => {setModalFile(true)}}
+            >
               <LinearGradient
                 start={{x: 0, y: 1}}
                 end={{x: 1, y: 0}}
