@@ -9,6 +9,9 @@ import EditProfile from './screen/EditProfile';
 import Splash from './screen/Splash';
 import About from './screen/About';
 import ConvertFile from './screen/ConvertFile';
+import { ModalMenu } from './screen/modal/ModalMenu';
+import { ModalNewFolder } from './screen/modal/ModalNewFolder';
+import { ModalAddFile } from './screen/modal/ModalAddFile';
 const Stack = createNativeStackNavigator();
 
 const Routing = () => {
@@ -22,6 +25,9 @@ const Routing = () => {
         <Stack.Screen name="EditProfile" component={EditProfile} />
         <Stack.Screen name="About" component={About} />
         <Stack.Screen name="ConvertFile" component={ConvertFile} />
+        <Stack.Screen name="ModalMenu" component={ModalMenu} />
+        <Stack.Screen name="ModalNewFolder" component={ModalNewFolder} />
+        <Stack.Screen name="ModalAddFile" component={ModalAddFile} />
 
       </Stack.Navigator>
     </NavigationContainer>

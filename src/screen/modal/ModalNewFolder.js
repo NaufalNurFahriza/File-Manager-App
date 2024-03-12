@@ -4,8 +4,7 @@ import {View, Modal, TouchableOpacity, Text, TextInput} from 'react-native';
 export const ModalNewFolder = ({show, onClose}) => {
   return (
     <Modal transparent visible={show} onRequestClose={onClose}>
-      <View
-        className=" flex flex-1 justify-center items-center bg-black/[.8] p-9">
+      <View className=" flex flex-1 justify-center items-center bg-black/[.8] p-9">
         <View className="w-full bg-slate-100 rounded-lg p-4">
           <View className="w-full">
             <Text className=" text-stone-900 text-lg font-medium">
@@ -18,28 +17,23 @@ export const ModalNewFolder = ({show, onClose}) => {
             </Text>
             <TextInput
               placeholder="New Folder"
-            //   onChangeText={text => setEmail(text)}
+              //   onChangeText={text => setEmail(text)}
               className="my-3 w-full rounded-lg bg-white px-3 text-sm border-b-[1px] border-blue-700"
-              keyboardType='default'
+              keyboardType="default"
             />
           </View>
           <View className="flex-row justify-end">
-          <TouchableOpacity
-            className=""
-            onPress={onClose}>
-            <Text className="text-blue-600 text-sm font-semibold">Cancel</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            className="ml-7"
-            onPress={onClose}
-            >
-            <Text className="text-blue-600 text-sm font-semibold">Ok</Text>
-          </TouchableOpacity>
+            <TouchableOpacity className="" onPress={onClose}>
+              <Text className="text-blue-600 text-sm font-semibold">
+                Cancel
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity className="ml-7" onPress={onClose}>
+              <Text className="text-blue-600 text-sm font-semibold">Ok</Text>
+            </TouchableOpacity>
           </View>
-          
         </View>
       </View>
     </Modal>
   );
 };
-

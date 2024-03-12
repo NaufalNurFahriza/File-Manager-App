@@ -124,12 +124,6 @@ export default function Home({navigation}) {
           />
         </View>
       </ScrollView>
-      {/* <TouchableOpacity
-                activeOpacity={0.8}
-                style={styles.btnFloating}
-                onPress={() => navigation.navigate('AddDataHome')}>
-                <Icon name="plus" size={25} color="#fff" />
-            </TouchableOpacity> */}
     </View>
   );
 }
