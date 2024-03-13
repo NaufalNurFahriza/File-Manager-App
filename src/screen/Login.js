@@ -1,18 +1,30 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
-  ScrollView,
-  TextInput,
   Text,
-  TouchableOpacity,
-  Image,
+  ScrollView,
   KeyboardAvoidingView,
+  Image,
+  TextInput,
+  TouchableOpacity,
   Dimensions,
 } from 'react-native';
-
-const Login = ({navigation}) => {
+import {useDispatch, useSelector} from 'react-redux';
+const Login = ({navigation, route}) => {
+  const dispatch = useDispatch();
+  const {loginData, isLoggedIn} = useSelector(state => state.login);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    console.log('login userCheck', isLoggedIn);
+    if (isLoggedIn != false) {
+      console.log('login user', isLoggedIn);
+      navigation.replace('bottom');
+    } else {
+      console.log('gagal', isLoggedIn);
+    }
+  }, []);
 
   return (
     <View className="flex-1 bg-slate-100">
@@ -47,31 +59,21 @@ const Login = ({navigation}) => {
               onChangeText={text => setPassword(text)}
               className="my-4 w-full rounded-lg bg-slate-100 px-3"
             />
-            {/* <View
-              style={{
-                width: '100%',
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginTop: 15,
-                justifyContent: 'space-between',
-              }}>
-              <TouchableOpacity
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
-                <Text
-                  style={{
-                    fontSize: 12,
-                    color: '#717171',
-                  }}>
-                  Forgot Password?
-                </Text>
-              </TouchableOpacity>
-            </View> */}
             <TouchableOpacity
               className="w-full rounded-lg my-6 py-3 bg-blue-700 justify-center items-center"
-              onPress={() => navigation.navigate('BottomNav')}>
+              onPress={() => {
+                if (
+                  loginData.email === email &&
+                  loginData.email != '' &&
+                  loginData.password === password &&
+                  loginData.password != ''
+                ) {
+                  console.log('login user', isLoggedIn);
+                  dispatch({type: 'LOGIN'});
+                  navigation.replace('bottom');
+                }
+              }}
+              >
               <Text className="text-white font-bold text-lg">Login</Text>
             </TouchableOpacity>
             <View className="w-full justify-center items-center my-3 flex-row">

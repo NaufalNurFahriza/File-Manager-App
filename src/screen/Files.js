@@ -11,7 +11,6 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {dataList} from '../data/data';
 import LinearGradient from 'react-native-linear-gradient';
-
 import {ModalMenu} from './modal/ModalMenu';
 
 export default function Files({navigation}) {

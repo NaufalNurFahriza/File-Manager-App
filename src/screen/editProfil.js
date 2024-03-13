@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -11,8 +11,25 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import LinearGradient from 'react-native-linear-gradient';
+import {useDispatch, useSelector} from 'react-redux';
 
 export default function EditProfile({navigation}) {
+  const {loginData} = useSelector(state => state.login);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const dispatch = useDispatch();
+  const tambahData = () => {
+    const data = {
+      name: name ? name : 'Agus Susanto',
+      email: email ? email : 'Agussusanto@gmail.com',
+      phoneNumber: phoneNumber ? phoneNumber : '081245678972',
+      imgProfile:
+        'https://i.pinimg.com/564x/7c/c7/a6/7cc7a630624d20f7797cb4c8e93c09c1.jpg',
+    };
+    dispatch({type: 'ADD_DATA_LOGIN', data: data});
+    navigation.replace('bottom');
+  };
   return (
     <View className="flex-1 bg-slate-200">
       <View className="w-full h-16 bg-white flex-row self-center items-center pl-3 shadow-md">

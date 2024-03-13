@@ -11,15 +11,21 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {dataList} from '../data/data';
 import LinearGradient from 'react-native-linear-gradient';
-import { ModalNewFolder } from './modal/ModalNewFolder';
-import { ModalAddFile } from './modal/ModalAddFile';
+import {ModalNewFolder} from './modal/ModalNewFolder';
+import {ModalAddFile} from './modal/ModalAddFile';
+import {useDispatch, useSelector} from 'react-redux';
 
 export default function Home({navigation}) {
+  // const dispatch = useDispatch();
+  // const {storeData} = useSelector(state => state.home);
+  // const {loginData, isLoggedIn} = useSelector(state => state.login);
+  // console.log('test', loginData);
+  // console.log('login userhome', isLoggedIn);
   const [modalFolder, setModalFolder] = useState(false);
   const [modalFile, setModalFile] = useState(false);
 
   const handleCloseModal = () => {
-    setModalFolder(false) || setModalFile(false)
+    setModalFolder(false) || setModalFile(false);
   };
   const renderItem = ({item}) => (
     <View className="w-full py-5 bg-white flex-row items-center justify-between px-4 border-b-2 border-b-slate-100 rounded-sm">
@@ -32,17 +38,10 @@ export default function Home({navigation}) {
       </TouchableOpacity>
     </View>
   );
-
   return (
     <View className="flex-1 bg-slate-100">
-      <ModalNewFolder
-      show={modalFolder}
-      onClose={handleCloseModal}
-      />
-      <ModalAddFile
-      show={modalFile}
-      onClose={handleCloseModal}
-      />
+      <ModalNewFolder show={modalFolder} onClose={handleCloseModal} />
+      <ModalAddFile show={modalFile} onClose={handleCloseModal} />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingBottom: 10}}>
@@ -58,10 +57,10 @@ export default function Home({navigation}) {
 
         <View className="bg-slate-50 px-5 py-4 flex-row items-center justify-around">
           <View className="flex-col items-center">
-
-            <TouchableOpacity 
-            onPress={() => {setModalFolder(true)}}
-            >
+            <TouchableOpacity
+              onPress={() => {
+                setModalFolder(true);
+              }}>
               <LinearGradient
                 start={{x: 0, y: 1}}
                 end={{x: 1, y: 0}}
@@ -76,10 +75,10 @@ export default function Home({navigation}) {
             </Text>
           </View>
           <View className="flex-col items-center">
-
             <TouchableOpacity
-            onPress={() => {setModalFile(true)}}
-            >
+              onPress={() => {
+                setModalFile(true);
+              }}>
               <LinearGradient
                 start={{x: 0, y: 1}}
                 end={{x: 1, y: 0}}
@@ -94,8 +93,8 @@ export default function Home({navigation}) {
             </Text>
           </View>
           <View className="flex-col items-center">
-
-            <TouchableOpacity onPress={() => navigation.navigate('ConvertFile')}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ConvertFile')}>
               <LinearGradient
                 start={{x: 0, y: 1}}
                 end={{x: 1, y: 0}}

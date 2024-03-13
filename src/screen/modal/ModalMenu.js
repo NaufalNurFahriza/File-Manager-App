@@ -7,9 +7,8 @@ export const ModalMenu = ({show, onClose, navigation}) => {
   return (
     <Modal transparent visible={show} onRequestClose={onClose}>
       <View className=" flex flex-1 justify-end bg-black/[.6]">
-        <View className="absolute bottom-16 right-5 py-[18px]">
+        <View className="absolute bottom-16 right-5 py-3">
         <View className="flex-col items-center justify-around">
-
 
             <TouchableOpacity 
             onPress={() => {setModalFolder(true)}}
@@ -23,8 +22,6 @@ export const ModalMenu = ({show, onClose, navigation}) => {
               </LinearGradient>
             </TouchableOpacity>
 
-      
-
             <TouchableOpacity
             onPress={() => {setModalFile(true)}}
             >
@@ -37,8 +34,6 @@ export const ModalMenu = ({show, onClose, navigation}) => {
               </LinearGradient>
             </TouchableOpacity>
 
-
-
             <TouchableOpacity onPress={() => navigation.navigate('ConvertFile')}>
               <LinearGradient
                 start={{x: 0, y: 1}}
@@ -48,9 +43,8 @@ export const ModalMenu = ({show, onClose, navigation}) => {
                 <AntDesign name="pdffile1" size={24} color="white" />
               </LinearGradient>
             </TouchableOpacity>
-
         </View>
-        
+      
           <TouchableOpacity onPress={onClose}>
             <LinearGradient
               start={{x: 0, y: 1}}

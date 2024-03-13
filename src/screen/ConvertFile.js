@@ -2,11 +2,8 @@ import React from 'react';
 import {
   View,
   Text,
-  TextInput,
   ScrollView,
-  Image,
   TouchableOpacity,
-  ImageBackground,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
