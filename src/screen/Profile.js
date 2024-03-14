@@ -66,10 +66,14 @@ const Profile = ({navigation}) => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => {
-              dispatch({type: 'RESET_DATA_LOGIN'});
-              navigation.replace('Login');
-            }}
+          onPress={() => {
+            dispatch({type: 'LOGOUT'});
+            navigation.replace('Login');
+          }}
+            // onPress={() => {
+            //   dispatch({type: 'RESET_DATA_LOGIN'});
+            //   navigation.replace('Login');
+            // }}
             // onPress={() => navigation.navigate('Login')}
             className="bg-white my-2 rounded-xl items-center flex-row px-6">
             <AntDesign name="logout" size={32} color="red" />
