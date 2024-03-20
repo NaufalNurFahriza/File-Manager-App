@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -11,10 +11,35 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import LinearGradient from 'react-native-linear-gradient';
+import {useDispatch, useSelector} from 'react-redux';
+import { ModalAddPhoto } from './modal/ModalAddPhoto';
 
 export default function EditProfile({navigation}) {
+  const {loginData} = useSelector(state => state.login);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [imgProfile, setImgProfile] = useState('');
+  const [modalPhoto, setModalPhoto] = useState(false);
+  const dispatch = useDispatch();
+  const tambahData = () => {
+    const data = {
+      name: name ? name : 'Agus Susanto',
+      email: email ? email : 'Agussusanto@gmail.com',
+      phoneNumber: phoneNumber ? phoneNumber : '081245678972',
+      imgProfile: imgProfile ? imgProfile:
+        'https://i.pinimg.com/564x/7c/c7/a6/7cc7a630624d20f7797cb4c8e93c09c1.jpg',
+    };
+    dispatch({type: 'ADD_DATA_LOGIN', data: data});
+    navigation.replace('bottom');
+  };
+
+  const handleCloseModal = () => {
+    setModalPhoto(false);
+  };
   return (
     <View className="flex-1 bg-slate-200">
+      <ModalAddPhoto show={modalPhoto} onClose={handleCloseModal} setImgProfile={setImgProfile} />
       <View className="w-full h-16 bg-white flex-row self-center items-center pl-3 shadow-md">
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={24} color="#243bbb" />
@@ -37,11 +62,14 @@ export default function EditProfile({navigation}) {
             className="px-6 py-6 h-60">
             <View className="py-10 items-center">
               <Image
-                source={require('../assets/images/photoProfile.png')}
-                className="w-28 h-28 object-contain my-3 border-2 border-black"
+                source={{uri: loginData.imgProfile}}
+                className="w-28 h-28 object-contain my-3 border-2 border-black rounded-full"
               />
               <View className="bg-blue-500 items-center my-4 px-4 py-2 rounded-3xl">
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    setModalPhoto(true);
+                  }}>
                   <View className="flex-row items-center">
                     <MaterialIcons name="edit" size={20} color="white" />
                     <Text className="text-base text-white font-medium ml-2">
@@ -60,7 +88,7 @@ export default function EditProfile({navigation}) {
             <TextInput
               placeholder="Name"
               defaultValue={loginData.name}
-            onChangeText={Text => setName(Text)}
+              onChangeText={Text => setName(Text)}
               className="w-full mt-3 rounded-lg bg-slate-50 px-3"
               keyboardType="default"
             />
@@ -71,7 +99,7 @@ export default function EditProfile({navigation}) {
             <TextInput
               placeholder="Email@gmail.com"
               defaultValue={loginData.email}
-            onChangeText={Text => setEmail(Text)}
+              onChangeText={Text => setEmail(Text)}
               className="w-full mt-3 rounded-lg bg-slate-50 px-3"
               keyboardType="email-address"
             />
@@ -82,15 +110,14 @@ export default function EditProfile({navigation}) {
             <TextInput
               placeholder="080040008000"
               defaultValue={loginData.phoneNumber}
-            onChangeText={Text => setPhoneNumber(Text)}
+              onChangeText={Text => setPhoneNumber(Text)}
               className="w-full mt-3 rounded-lg bg-slate-50 px-3"
               keyboardType="numeric"
             />
           </View>
           <TouchableOpacity
-          onPress={tambahData}
-            className="w-full rounded-lg my-6 py-3 bg-blue-700 justify-center items-center"
->
+            onPress={tambahData}
+            className="w-full rounded-lg my-6 py-3 bg-blue-700 justify-center items-center">
             <Text className="text-white font-bold text-lg">Save</Text>
           </TouchableOpacity>
         </View>
