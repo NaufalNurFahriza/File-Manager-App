@@ -15,7 +15,6 @@ import {useDispatch, useSelector} from 'react-redux';
 const Profile = ({navigation}) => {
   const dispatch = useDispatch();
   const {loginData} = useSelector(state => state.login);
-
   return (
     <View className="flex-1 bg-slate-100">
       <ScrollView

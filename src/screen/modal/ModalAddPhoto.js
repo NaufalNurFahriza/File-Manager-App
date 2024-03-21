@@ -13,10 +13,10 @@ export const ModalAddPhoto = ({ show, onClose, setImgProfile, dispatch, navigati
 
     try {
       const result = await launchCamera(options);
-      console.log(result);
+      console.log(result, result.assets[0].uri);
       if (!result.cancelled) {
-        setImgProfile(result.uri); // Update imgProfile dengan URI gambar dari kamera
-        tambahData();
+        setImgProfile(result.assets[0].uri); // Update imgProfile dengan URI gambar dari kamera
+        tambahData(result.assets[0].uri);
       }
     } catch (error) {
       console.log(error);
@@ -30,24 +30,24 @@ export const ModalAddPhoto = ({ show, onClose, setImgProfile, dispatch, navigati
       maxHeight: 300,
       quality: 1,
     };
-  
+
     try {
       const result = await launchImageLibrary(options);
+      console.log(result, result.assets[0].uri)
       if (!result.cancelled) {
-        setImgProfile(result.uri); // Update imgProfile dengan URI gambar dari galeri
-        tambahData();
+        setImgProfile(result.assets[0].uri); // Update imgProfile dengan URI gambar dari galeri
+        tambahData(result.assets[0].uri);
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const tambahData = () => {
+  const tambahData = (i: any) => {
     const data = {
-      imgProfile: setImgProfile ? setImgProfile :
-        'https://i.pinimg.com/564x/7c/c7/a6/7cc7a630624d20f7797cb4c8e93c09c1.jpg',
+      imgProfile: i
     };
-    dispatch({type: 'ADD_DATA_LOGIN', data: data});
+    dispatch({ type: 'ADD_IMAGE', data: data });
     navigation.replace('bottom');
   };
 
