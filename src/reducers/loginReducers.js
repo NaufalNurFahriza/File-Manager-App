@@ -18,6 +18,15 @@ const loginReducers = (state = initialState, action) => {
         isLoggedIn: true,
         loginData: action.data,
       };
+    case 'ADD_IMAGE':
+      return {
+        ...state,
+        isLoggedIn: true,
+        loginData: {
+          ...loginData,
+          imgProfile: action.data,
+        },
+      };
     case 'RESET_DATA_LOGIN':
       return {
         ...state,
