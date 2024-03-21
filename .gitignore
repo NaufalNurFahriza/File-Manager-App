@@ -61,3 +61,8 @@ buck-out/
 # Ruby / CocoaPods
 /ios/Pods/
 /vendor/bundle/
+
+src/screen/.Files1.js
+src/screen/.Files2.js
+src/screen/.FilesOld.js
+

@@ -80,7 +80,7 @@ function MyTabs(params) {
       screenOptions={{headerShown: false}}
       initialRouteName="Home">
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Files" component={Files} />
+      {/* <Tab.Screen name="Files" component={Files} /> */}
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );

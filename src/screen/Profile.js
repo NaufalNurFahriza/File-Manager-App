@@ -81,7 +81,7 @@ const Profile = ({navigation}) => {
               Logout
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
 
             onPress={() => {
               dispatch({type: 'RESET_DATA_LOGIN'});
@@ -92,7 +92,7 @@ const Profile = ({navigation}) => {
             <Text className="text-red-600 text-lg font-semibold my-4 ml-7">
               Reset data
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </ScrollView>
     </View>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Modal, TouchableOpacity, Text, TextInput} from 'react-native';
 
-export const ModalNewFolder = ({show, onClose}) => {
+export const ModalNewFolder = ({show, onClose, folderName, setFolderName, createFolder}) => {
   return (
     <Modal transparent visible={show} onRequestClose={onClose}>
       <View className=" flex flex-1 justify-center items-center bg-black/[.8] p-9">
@@ -16,8 +16,9 @@ export const ModalNewFolder = ({show, onClose}) => {
               New Folder Name
             </Text>
             <TextInput
-              placeholder="New Folder"
-              //   onChangeText={text => setEmail(text)}
+              placeholder="Enter New Folder"
+              value={folderName}
+              onChangeText={text => setFolderName(text)}
               className="my-3 w-full rounded-lg bg-white px-3 text-sm border-b-[1px] border-blue-700"
               keyboardType="default"
             />
@@ -28,7 +29,11 @@ export const ModalNewFolder = ({show, onClose}) => {
                 Cancel
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity className="ml-7" onPress={onClose}>
+            <TouchableOpacity className="ml-7" 
+             onPress={() => {
+              onClose();
+              createFolder();
+            }}>
               <Text className="text-blue-600 text-sm font-semibold">Ok</Text>
             </TouchableOpacity>
           </View>
