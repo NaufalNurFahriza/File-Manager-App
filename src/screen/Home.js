@@ -8,31 +8,27 @@ import {
   FlatList,
   ImageBackground,
   Alert,
-  TextInput,
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {dataList} from '../data/data';
 import LinearGradient from 'react-native-linear-gradient';
 import {ModalNewFolder} from './modal/ModalNewFolder';
 import {ModalAddFile} from './modal/ModalAddFile';
 import RNFS from 'react-native-fs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import { ModalConvertFile } from './modal/ModalConvertFile';
 
 export default function Home({navigation}) {
   const [currentPath, setCurrentPath] = useState(RNFS.DocumentDirectoryPath);
   const [folders, setFolders] = useState([]);
   const [folderName, setFolderName] = useState('');
-  const [showNewFolderInput, setShowNewFolderInput] = useState(false);
   const [showNewFileInput, setShowNewFileInput] = useState(false);
   const [fileName, setFileName] = useState('');
-  const [showAllPath, setShowAllPath] = useState(false);
   const [sortDirection, setSortDirection] = useState('asc');
-  const [modalMenu, setModalMenu] = useState(false);
-  const [showNewImageInput, setShowNewImageInput] = useState(false);
 
   const [modalFolder, setModalFolder] = useState(false);
   const [modalFile, setModalFile] = useState(false);
+  const [modalConvert, setModalConvert] = useState(false);
 
   useEffect(() => {
     getAllFolders(currentPath);
@@ -53,7 +49,6 @@ export default function Home({navigation}) {
     RNFS.mkdir(newPath)
       .then(() => {
         setFolderName('');
-        setShowNewFolderInput(false);
         getAllFolders(currentPath);
       })
       .catch(error => {
@@ -68,7 +63,6 @@ export default function Home({navigation}) {
       .then(() => {
         getAllFolders(currentPath);
         console.log('File created successfully!');
-        setShowNewFileInput(false); // Close the modal
       })
       .catch(error => {
         console.error('Error creating file:', error);
@@ -92,16 +86,13 @@ export default function Home({navigation}) {
   const navigateBack = () => {
     // Define the root directory path
     const rootDirectoryPath = '/data/user/0/com.file_manager_app';
-
     // Remove the last part of the current path to navigate to the parent directory
     const parentPath = currentPath.split('/').slice(0, -1).join('/');
-
     // Check if the parentPath is at the root directory
     if (parentPath === rootDirectoryPath) {
       // If at root directory, disable back navigation
       return;
     }
-
     // Otherwise, navigate to the parent directory
     setCurrentPath(parentPath);
   };
@@ -147,7 +138,7 @@ export default function Home({navigation}) {
       } else {
         console.log('Camera Response: ', response);
         // Simpan gambar sebagai file .png
-        saveImageAsPng(response.assets[0]);
+        saveImageAsPng(response.assets[0], currentPath);
       }
     });
   };
@@ -173,15 +164,15 @@ export default function Home({navigation}) {
       } else {
         console.log('ImagePicker Response: ', response);
         // Simpan gambar sebagai file .png
-        saveImageAsPng(response.assets[0]);
+        saveImageAsPng(response.assets[0], currentPath);
       }
     });
   };
 
-  const saveImageAsPng = async asset => {
+  const saveImageAsPng = async (asset, currentPath) => {
     const sourcePath = asset.uri; // Path dari gambar yang diambil
-    const fileNamePrefix = 'IMG_00'; // Awalan nama file
-    const existingFiles = await RNFS.readdir(RNFS.DocumentDirectoryPath); // Mendapatkan daftar file yang ada
+    const fileNamePrefix = 'IMG_'; // Awalan nama file
+    const existingFiles = await RNFS.readdir(currentPath); // Mendapatkan daftar file yang ada
     let maxNumber = 0;
 
     // Mencari nomor file terbesar
@@ -196,11 +187,17 @@ export default function Home({navigation}) {
       }
     });
 
-    // Membuat nama file baru dengan nomor yang belum digunakan
-    const newFileName = `${fileNamePrefix}${(maxNumber + 1)
-      .toString()
-      .padStart(3, '0')}.png`;
-    const destinationPath = `${RNFS.DocumentDirectoryPath}/${newFileName}`; // Path untuk menyimpan gambar sebagai .png
+    // Mendapatkan tanggal, bulan, tahun, dan detik dengan dua digit
+    const currentDate = new Date();
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = currentDate.getFullYear().toString();
+    const seconds = currentDate.getSeconds().toString().padStart(2, '0');
+
+    // Membuat nama file baru dengan tanggal, bulan, tahun, dan detik dengan dua digit
+    const newFileName = `${fileNamePrefix}${day}${month}${year}_${seconds}.png`;
+
+    const destinationPath = `${currentPath}/${newFileName}`; // Path untuk menyimpan gambar sebagai .png
 
     try {
       // Membaca konten gambar
@@ -213,11 +210,7 @@ export default function Home({navigation}) {
     } catch (error) {
       console.error('Error saving image as .png:', error);
     }
-  };
-
-  const handleCloseModal = () => {
-    setModalMenu(false);
-  };
+};
 
   const renderItem = ({item}) => (
     <View className="w-full py-5 bg-white flex-row items-center justify-between px-4 border-b-2 border-b-slate-100 rounded-sm">
@@ -253,27 +246,6 @@ export default function Home({navigation}) {
         </View>
         <Text className="text-sm font-medium ml-4">{item.name}</Text>
       </TouchableOpacity>
-      {/* <TouchableOpacity
-        onPress={() => {
-          Alert.alert(
-            `Delete ${item.isDirectory() ? 'Folder' : 'File'}`,
-            `Are you sure you want to delete ${item.name}?`,
-            [
-              {
-                text: 'Cancel',
-                style: 'cancel',
-              },
-              {
-                text: 'Delete',
-                onPress: () => deleteDir(item.path),
-                style: 'destructive',
-              },
-            ],
-          );
-        }}
-        className="w-6 h-6">
-        <AntDesign name="delete" size={20} color="gray" />
-      </TouchableOpacity> */}
     </View>
   );
 
@@ -293,7 +265,12 @@ export default function Home({navigation}) {
         openCamera={openCamera}
         openImageLibrary={openImageLibrary}
       />
-
+      <ModalConvertFile
+        show={modalConvert}
+        onClose={() => setModalConvert(false)}
+        // openCameraPDF={openCameraPDF}
+        // openImageLibraryPDF={openImageLibraryPDF}
+      />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingBottom: 10}}>
