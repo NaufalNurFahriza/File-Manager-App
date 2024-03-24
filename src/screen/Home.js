@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+/* eslint-disable prettier/prettier */
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -11,14 +12,16 @@ import {
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import LinearGradient from 'react-native-linear-gradient';
-import {ModalNewFolder} from './modal/ModalNewFolder';
-import {ModalAddFile} from './modal/ModalAddFile';
+import { ModalNewFolder } from './modal/ModalNewFolder';
+import { ModalAddFile } from './modal/ModalAddFile';
 import RNFS from 'react-native-fs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {ModalConvertFile} from './modal/ModalConvertFile';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { ModalConvertFile } from './modal/ModalConvertFile';
+import { ModalImage } from './modal/ModalImage';
+import { ModalPdf } from './modal/ModalPdf';
 
-export default function Home({navigation}) {
+export default function Home({ navigation }) {
   const [currentPath, setCurrentPath] = useState(RNFS.DocumentDirectoryPath);
   const [folders, setFolders] = useState([]);
   const [folderName, setFolderName] = useState('');
@@ -56,7 +59,6 @@ export default function Home({navigation}) {
         console.error('Error creating folder:', error);
       });
   };
-  
 
   const createFile = () => {
     const filePath = `${currentPath}/${fileName}`;
@@ -81,9 +83,7 @@ export default function Home({navigation}) {
       });
   };
 
-  const navigateToFolder = folder => {
-    setCurrentPath(folder.path);
-  };
+
 
   const navigateBack = () => {
     // Define the root directory path
@@ -175,7 +175,6 @@ export default function Home({navigation}) {
     const sourcePath = asset.uri; // Path dari gambar yang diambil
     const fileNamePrefix = 'IMG_'; // Awalan nama file
 
-
     // Mendapatkan tanggal, bulan, tahun, dan detik dengan dua digit
     const currentDate = new Date();
     const day = currentDate.getDate().toString().padStart(2, '0');
@@ -201,19 +200,22 @@ export default function Home({navigation}) {
     }
   };
   const onConvertSuccess = async pdfFilePath => {
-    const folderPath = currentPath !== RNFS.DocumentDirectoryPath ? currentPath : RNFS.DocumentDirectoryPath; // Menggunakan path folder utama jika di root folder
+    const folderPath =
+      currentPath !== RNFS.DocumentDirectoryPath
+        ? currentPath
+        : RNFS.DocumentDirectoryPath; // Menggunakan path folder utama jika di root folder
     const fileNamePrefix = 'PDF_'; // Awalan nama file PDF
     const currentDate = new Date();
     const seconds = currentDate.getSeconds().toString().padStart(2, '0'); // Detik dengan dua digit
     // Membuat nama file PDF baru dengan detik saat ini
     const newFileName = `${fileNamePrefix}${seconds}.pdf`;
     const destinationPath = `${folderPath}/${newFileName}`; // Path untuk menyimpan file PDF
-  
+
     try {
       // Mengecek apakah file dengan nama yang sama sudah ada di folder
       const isFileExists = await RNFS.exists(destinationPath);
       let finalDestinationPath = destinationPath;
-  
+
       // Jika file dengan nama yang sama sudah ada, tambahkan angka unik ke nama file
       if (isFileExists) {
         let count = 1;
@@ -223,11 +225,11 @@ export default function Home({navigation}) {
         }
         finalDestinationPath = `${folderPath}/${uniqueFileName}`;
       }
-  
+
       // Simpan file PDF ke path tujuan
       await RNFS.moveFile(pdfFilePath, finalDestinationPath);
       console.log('PDF file saved:', finalDestinationPath);
-  
+
       // Menambahkan file PDF baru ke daftar folder dengan simulasi
       const pdfFile = {
         name: finalDestinationPath.split('/').pop(), // Menggunakan nama file yang sudah diubah
@@ -240,11 +242,20 @@ export default function Home({navigation}) {
     }
     setModalConvert(false);
   };
+  const [img, setImg] = useState('')
+  const [pdf, setPdf] = useState('')
+  const navigateToFolder = item => {
+    {
+      item.isDirectory() ? (setCurrentPath(item.path)) :
+        item.name.toLowerCase().endsWith('.jpg') || item.name.toLowerCase().endsWith('.png') ? (setImg(item.path)) :
+          item.name.toLowerCase().endsWith('.pdf') ? (setPdf(item.path)) : ('')
+    }
+  };
 
-  const renderItem = ({item}) => (
-    <View className="w-full py-5 bg-white flex-row items-center justify-between px-4 border-b-2 border-b-slate-100 rounded-sm">
+  const renderItem = ({ item }) => {
+    return (
       <TouchableOpacity
-        className="flex-row items-center"
+        className="flex flex-row items-center"
         onPress={() => navigateToFolder(item)}
         onLongPress={() => {
           Alert.alert(
@@ -263,25 +274,29 @@ export default function Home({navigation}) {
             ],
           );
         }}>
-        <View>
-          {item.isDirectory() ? (
-            <FontAwesome name="folder" size={24} color="#F8D775" />
-          ) : item.name.toLowerCase().endsWith('.jpg') ||
-            item.name.toLowerCase().endsWith('.png') ? (
-            <FontAwesome name="image" size={20} color="#87CEEB" />
-          ) : item.name.toLowerCase().endsWith('.pdf') ? (
-            <FontAwesome name="file-pdf-o" size={24} color="red" />
-          ) : (
-            <FontAwesome name="file-text" size={24} color="gray" />
-          )}
+        <View className="w-full py-5 bg-white flex-row items-center px-4 border-b-2 border-b-slate-100 rounded-sm">
+          <View>
+            {item.isDirectory() ? (
+              <FontAwesome name="folder" size={24} color="#F8D775" />
+            ) : item.name.toLowerCase().endsWith('.jpg') ||
+              item.name.toLowerCase().endsWith('.png') ? (
+              <FontAwesome name="image" size={20} color="#87CEEB" />
+            ) : item.name.toLowerCase().endsWith('.pdf') ? (
+              <FontAwesome name="file-pdf-o" size={24} color="red" />
+            ) : (
+              <FontAwesome name="file-text" size={24} color="gray" />
+            )}
+          </View>
+          <Text className="text-sm font-medium ml-4">{item.name}</Text>
         </View>
-        <Text className="text-sm font-medium ml-4">{item.name}</Text>
       </TouchableOpacity>
-    </View>
-  );
+    )
+  };
 
   return (
     <View className="flex-1 bg-slate-100">
+      <ModalImage item={img} setItem={setImg} />
+      <ModalPdf item={pdf} setItem={setPdf} />
       <ModalNewFolder
         show={modalFolder}
         onClose={() => setModalFolder(false)}
@@ -303,14 +318,14 @@ export default function Home({navigation}) {
       />
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{paddingBottom: 10}}>
+        contentContainerStyle={{ paddingBottom: 10 }}>
         <ImageBackground
           source={require('../assets/images/ArsipBg.png')}
           resizeMode="cover"
           className="px-6 py-6 h-44">
           <Image
             source={require('../assets/images/ArsipkuWhite.png')}
-            style={{width: 106, height: 26}}
+            style={{ width: 106, height: 26 }}
           />
         </ImageBackground>
 
@@ -321,8 +336,8 @@ export default function Home({navigation}) {
                 setModalFolder(true);
               }}>
               <LinearGradient
-                start={{x: 0, y: 1}}
-                end={{x: 1, y: 0}}
+                start={{ x: 0, y: 1 }}
+                end={{ x: 1, y: 0 }}
                 colors={['#F5C62C', '#FD5B4B']}
                 className="items-center justify-center rounded-full w-[60px] h-[60px]">
                 <AntDesign name="addfolder" size={24} color="white" />
@@ -339,8 +354,8 @@ export default function Home({navigation}) {
                 setModalFile(true);
               }}>
               <LinearGradient
-                start={{x: 0, y: 1}}
-                end={{x: 1, y: 0}}
+                start={{ x: 0, y: 1 }}
+                end={{ x: 1, y: 0 }}
                 colors={['#D8E474', '#62C654']}
                 className="items-center justify-center rounded-full w-[60px] h-[60px]">
                 <FontAwesome name="file-photo-o" size={24} color="white" />
@@ -358,8 +373,8 @@ export default function Home({navigation}) {
                 setModalConvert(true);
               }}>
               <LinearGradient
-                start={{x: 0, y: 1}}
-                end={{x: 1, y: 0}}
+                start={{ x: 0, y: 1 }}
+                end={{ x: 1, y: 0 }}
                 colors={['#8FF8D4', '#16AAFB']}
                 className="items-center justify-center rounded-full w-[60px] h-[60px]">
                 <AntDesign name="pdffile1" size={24} color="white" />
@@ -382,7 +397,7 @@ export default function Home({navigation}) {
                   className="bg-stone-900"
                 />
               </TouchableOpacity>
-              <View style={{flexDirection: 'column'}}>
+              <View style={{ flexDirection: 'column' }}>
                 <Text className="text-lg text-stone-900 capitalize">
                   {currentPath.split('/').pop()}
                 </Text>
@@ -390,7 +405,7 @@ export default function Home({navigation}) {
             </View>
 
             <TouchableOpacity onPress={sortData}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text className="text-base text-stone-900 font-semibold pr-3">
                   {sortDirection === 'asc' ? 'Z - A' : 'A - Z'}
                 </Text>
