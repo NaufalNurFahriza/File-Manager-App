@@ -1,41 +1,112 @@
-import React from 'react';
-import { View, Modal, TouchableOpacity, Text } from 'react-native';
+import React, {useState} from 'react';
+import {View, Modal, TouchableOpacity, Text, Dimensions} from 'react-native';
+import {launchImageLibrary} from 'react-native-image-picker';
+import RNImageToPdf from 'react-native-image-to-pdf';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-export const ModalConvertFile = ({ show, onClose, openCameraPDF, openImageLibraryPDF }) => {
+export const ModalConvertFile = ({ show, onClose, onConvertSuccess }) => {
+  const [imageData, setImageData] = useState(null);
+
+  const handleImageSelection = image => {
+    setImageData(image);
+  };
+
+  const openImageLibraryPDF = () => {
+    const options = {
+      mediaType: 'photo',
+      maxWidth: 1024,
+      maxHeight: 1024,
+      quality: 1,
+      includeBase64: false,
+    };
+
+    launchImageLibrary(options, response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.errorCode) {
+        console.log(
+          'ImagePicker Error: ',
+          response.errorCode,
+          response.errorMessage,
+        );
+      } else {
+        console.log('ImagePicker Response: ', response);
+        handleImageSelection(response.assets[0]);
+      }
+    });
+  };
+
+  const convertToPDF = async () => {
+    try {
+      const { width, height } = Dimensions.get('window');
+      const options = {
+        imagePaths: [imageData.uri.replace('file://', '')],
+        name: 'ConvertedPDF', // PDF file name
+        maxSize: {
+          width: 900,
+          height: Math.round((height / width) * 900), // Calculate maximum image dimension
+        },
+        quality: 0.9,
+      };
+      const pdf = await RNImageToPdf.createPDFbyImages(options);
+      
+      console.log(pdf.filePath); // Log the PDF file path
+      onConvertSuccess(pdf.filePath);
+      setImageData(null); // Call onConvertSuccess with pdf.filePath
+    } catch(e) {
+      console.log(e);
+    }
+  };
+  
+  
   return (
     <Modal transparent visible={show} onRequestClose={onClose}>
-      <View className="flex flex-1 justify-end items-center bg-black/[.8] p-4">
-        <View className="w-full bg-slate-100 rounded-lg">
-          <View className="w-full  py-4">
-            <Text className=" text-center text-stone-900 text-base font-medium">
-              Select File to Convert PDF
-            </Text>
-          </View>
-          <TouchableOpacity
-              onPress={() => {
-                onClose();
-                openCameraPDF();
-              }}
-            className="w-full  border-y-[1px] border-gray-300 py-3">
-            <Text className=" text-center text-blue-600 text-lg font-semibold my-2">
-              Take Photo..
-            </Text>
+      <View className="flex-1 bg-slate-100">
+        <View className="w-full h-16 bg-white flex-row self-center items-center pl-3 shadow-md">
+        <TouchableOpacity onPress={() => { onClose(); setImageData(null); }}>
+            <Ionicons name="arrow-back" size={24} color="#243bbb" />
           </TouchableOpacity>
-          <TouchableOpacity
-                         onPress={() => {
-                          onClose();
-                          openImageLibraryPDF();
-                        }}
-            className="w-full  py-4">
-            <Text className="text-center text-blue-600 text-lg font-semibold my-2">
-              Choose from Gallery..
-            </Text>
-          </TouchableOpacity>
+          <Text className="ml-3 font-bold text-lg text-stone-600">
+            Convert File
+          </Text>
         </View>
-        <View className="w-full bg-slate-100 rounded-lg my-5 py-3">
-          <TouchableOpacity onPress={onClose}>
-            <Text className=" text-center text-blue-600 text-lg font-semibold my-2">
-              Cancel
+        <View className="px-6 py-6 items-center">
+          <Text className="text-stone-900 font-semibold text-lg text-center pt-10 pb-8">
+            Choose Image from Gallery
+          </Text>
+
+          <TouchableOpacity
+            onPress={openImageLibraryPDF}
+            className="w-56 rounded-lg py-3 border-blue-700 border-2 justify-center items-center">
+            <Text className="text-blue-700 font-semibold text-lg">
+              Select File
+            </Text>
+          </TouchableOpacity>
+
+          {imageData && (
+            <View className="bg-white px-4 py-6 w-80 my-9">
+              <View className="flex-row justify-between py-3">
+                <View className="flex-row items-center">
+                  <MaterialIcons name="image" size={24} color="#87CEEB" />
+                  <Text className="pl-5 font-medium text-base text-gray-600">
+                    {imageData.fileName.length > 20
+                      ? `${imageData.fileName.substring(0, 20)}...`
+                      : imageData.fileName}
+                  </Text>
+                </View>
+                <TouchableOpacity onPress={() => setImageData(null)}>
+                  <MaterialIcons name="close" size={24} color="gray" />
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
+
+          <TouchableOpacity
+            className="rounded-lg my-6 py-3 bg-red-700 justify-center items-center w-80"
+            onPress={convertToPDF}>
+            <Text className="text-white font-semibold text-lg">
+              Convert to PDF
             </Text>
           </TouchableOpacity>
         </View>

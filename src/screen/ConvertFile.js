@@ -9,7 +9,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import RNImageToPdf from 'react-native-image-to-pdf'; // Import RNImageToPdf module
-import {launchImageLibrary} from 'react-native-image-picker';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 export default function ConvertFile({ navigation }) {
   const [imageData, setImageData] = useState(null);
@@ -18,13 +18,13 @@ export default function ConvertFile({ navigation }) {
     try {
       const { width, height } = Dimensions.get('window'); // Get screen dimensions
       const options = {
-        imagePaths: [imageData.uri], // Pass the image path to convert
+        imagePaths: [imageData.uri.replace('file://', '')],// Pass the image path to convert
         name: 'ConvertedPDF', // PDF file name
         maxSize: {
           width: 900,
           height: Math.round((height / width) * 900), // Calculate maximum image dimension
         },
-        quality: 0.7, // optional compression parameter
+        quality: .9, // optional compression parameter
       };
       const pdf = await RNImageToPdf.createPDFbyImages(options);
       
@@ -112,11 +112,17 @@ export default function ConvertFile({ navigation }) {
 
           <TouchableOpacity
             className="rounded-lg my-6 py-3 bg-red-700 justify-center items-center w-80"
-            onPress={convertToPDF}>
+            onPress={() =>
+              convertToPDF().then(pdfFilePath => {
+                navigation.navigate('Home', { pdfFilePath });
+              })
+            }>
             <Text className="text-white font-semibold text-lg">
               Convert to PDF
             </Text>
           </TouchableOpacity>
+
+          
         </View>
       </ScrollView>
     </View>

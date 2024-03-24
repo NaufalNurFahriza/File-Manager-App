@@ -16,7 +16,7 @@ import {ModalAddFile} from './modal/ModalAddFile';
 import RNFS from 'react-native-fs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import { ModalConvertFile } from './modal/ModalConvertFile';
+import {ModalConvertFile} from './modal/ModalConvertFile';
 
 export default function Home({navigation}) {
   const [currentPath, setCurrentPath] = useState(RNFS.DocumentDirectoryPath);
@@ -50,11 +50,13 @@ export default function Home({navigation}) {
       .then(() => {
         setFolderName('');
         getAllFolders(currentPath);
+        console.log('Created new folder:', newPath); // Tambahkan log untuk menampilkan path folder yang baru dibuat
       })
       .catch(error => {
         console.error('Error creating folder:', error);
       });
   };
+  
 
   const createFile = () => {
     const filePath = `${currentPath}/${fileName}`;
@@ -172,20 +174,7 @@ export default function Home({navigation}) {
   const saveImageAsPng = async (asset, currentPath) => {
     const sourcePath = asset.uri; // Path dari gambar yang diambil
     const fileNamePrefix = 'IMG_'; // Awalan nama file
-    const existingFiles = await RNFS.readdir(currentPath); // Mendapatkan daftar file yang ada
-    let maxNumber = 0;
 
-    // Mencari nomor file terbesar
-    existingFiles.forEach(file => {
-      if (file.startsWith(fileNamePrefix)) {
-        const fileNumber = parseInt(
-          file.replace(fileNamePrefix, '').replace('.png', ''),
-        );
-        if (!isNaN(fileNumber) && fileNumber > maxNumber) {
-          maxNumber = fileNumber;
-        }
-      }
-    });
 
     // Mendapatkan tanggal, bulan, tahun, dan detik dengan dua digit
     const currentDate = new Date();
@@ -210,7 +199,47 @@ export default function Home({navigation}) {
     } catch (error) {
       console.error('Error saving image as .png:', error);
     }
-};
+  };
+  const onConvertSuccess = async pdfFilePath => {
+    const folderPath = currentPath !== RNFS.DocumentDirectoryPath ? currentPath : RNFS.DocumentDirectoryPath; // Menggunakan path folder utama jika di root folder
+    const fileNamePrefix = 'PDF_'; // Awalan nama file PDF
+    const currentDate = new Date();
+    const seconds = currentDate.getSeconds().toString().padStart(2, '0'); // Detik dengan dua digit
+    // Membuat nama file PDF baru dengan detik saat ini
+    const newFileName = `${fileNamePrefix}${seconds}.pdf`;
+    const destinationPath = `${folderPath}/${newFileName}`; // Path untuk menyimpan file PDF
+  
+    try {
+      // Mengecek apakah file dengan nama yang sama sudah ada di folder
+      const isFileExists = await RNFS.exists(destinationPath);
+      let finalDestinationPath = destinationPath;
+  
+      // Jika file dengan nama yang sama sudah ada, tambahkan angka unik ke nama file
+      if (isFileExists) {
+        let count = 1;
+        let uniqueFileName = newFileName;
+        while (await RNFS.exists(`${folderPath}/${uniqueFileName}`)) {
+          uniqueFileName = `${fileNamePrefix}${seconds}_${count++}.pdf`;
+        }
+        finalDestinationPath = `${folderPath}/${uniqueFileName}`;
+      }
+  
+      // Simpan file PDF ke path tujuan
+      await RNFS.moveFile(pdfFilePath, finalDestinationPath);
+      console.log('PDF file saved:', finalDestinationPath);
+  
+      // Menambahkan file PDF baru ke daftar folder dengan simulasi
+      const pdfFile = {
+        name: finalDestinationPath.split('/').pop(), // Menggunakan nama file yang sudah diubah
+        path: finalDestinationPath, // Gunakan path yang sudah diubah
+        isDirectory: () => false, // Bukan direktori
+      };
+      setFolders([...folders, pdfFile]); // Tambahkan file baru ke daftar folder
+    } catch (error) {
+      console.error('Error saving PDF file:', error);
+    }
+    setModalConvert(false);
+  };
 
   const renderItem = ({item}) => (
     <View className="w-full py-5 bg-white flex-row items-center justify-between px-4 border-b-2 border-b-slate-100 rounded-sm">
@@ -239,7 +268,9 @@ export default function Home({navigation}) {
             <FontAwesome name="folder" size={24} color="#F8D775" />
           ) : item.name.toLowerCase().endsWith('.jpg') ||
             item.name.toLowerCase().endsWith('.png') ? (
-            <FontAwesome name="image" size={24} color="#87CEEB" />
+            <FontAwesome name="image" size={20} color="#87CEEB" />
+          ) : item.name.toLowerCase().endsWith('.pdf') ? (
+            <FontAwesome name="file-pdf-o" size={24} color="red" />
           ) : (
             <FontAwesome name="file-text" size={24} color="gray" />
           )}
@@ -251,12 +282,12 @@ export default function Home({navigation}) {
 
   return (
     <View className="flex-1 bg-slate-100">
-      <ModalNewFolder 
-      show={modalFolder} 
-      onClose={() => setModalFolder(false)}
-      folderName={folderName}
-      setFolderName={setFolderName}
-      createFolder={createFolder}
+      <ModalNewFolder
+        show={modalFolder}
+        onClose={() => setModalFolder(false)}
+        folderName={folderName}
+        setFolderName={setFolderName}
+        createFolder={createFolder}
       />
 
       <ModalAddFile
@@ -268,8 +299,7 @@ export default function Home({navigation}) {
       <ModalConvertFile
         show={modalConvert}
         onClose={() => setModalConvert(false)}
-        // openCameraPDF={openCameraPDF}
-        // openImageLibraryPDF={openImageLibraryPDF}
+        onConvertSuccess={onConvertSuccess}
       />
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -313,18 +343,20 @@ export default function Home({navigation}) {
                 end={{x: 1, y: 0}}
                 colors={['#D8E474', '#62C654']}
                 className="items-center justify-center rounded-full w-[60px] h-[60px]">
-                <AntDesign name="addfile" size={24} color="white" />
+                <FontAwesome name="file-photo-o" size={24} color="white" />
               </LinearGradient>
             </TouchableOpacity>
 
             <Text className="text-sm font-semibold text-stone-900 pt-4">
-              Add File
+              Add Photo
             </Text>
           </View>
 
           <View className="flex-col items-center">
             <TouchableOpacity
-              onPress={() => navigation.navigate('ConvertFile')}>
+              onPress={() => {
+                setModalConvert(true);
+              }}>
               <LinearGradient
                 start={{x: 0, y: 1}}
                 end={{x: 1, y: 0}}
@@ -335,7 +367,7 @@ export default function Home({navigation}) {
             </TouchableOpacity>
 
             <Text className="text-sm font-semibold text-stone-900 pt-4">
-              Convert File
+              Convert PDF
             </Text>
           </View>
         </View>
