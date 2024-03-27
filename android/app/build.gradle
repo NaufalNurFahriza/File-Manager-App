@@ -253,9 +253,17 @@ android {
 
         }
     }
+    packagingOptions {
+        pickFirst '**/libc++_shared.so'
+        pickFirst '**/libfbjni.so'
+    }
 }
 
 dependencies {
+    implementation project(':react-native-view-pdf')
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+    
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     //noinspection GradleDynamicVersion

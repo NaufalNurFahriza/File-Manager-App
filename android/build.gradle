@@ -49,5 +49,11 @@ allprojects {
         }
         google()
         maven { url 'https://www.jitpack.io' }
+        gradlePluginPortal()
+    }
+    configurations.all {
+        resolutionStrategy {
+            force 'com.facebook.react:react-native:0.69.0'
+        }
     }
 }

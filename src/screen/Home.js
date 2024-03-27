@@ -244,6 +244,7 @@ export default function Home({ navigation }) {
   };
   const [img, setImg] = useState('')
   const [pdf, setPdf] = useState('')
+
   const navigateToFolder = item => {
     {
       item.isDirectory() ? (setCurrentPath(item.path)) :
@@ -251,6 +252,7 @@ export default function Home({ navigation }) {
           item.name.toLowerCase().endsWith('.pdf') ? (setPdf(item.path)) : ('')
     }
   };
+  
 
   const renderItem = ({ item }) => {
     return (
@@ -291,7 +293,7 @@ export default function Home({ navigation }) {
         </View>
       </TouchableOpacity>
     )
-  };
+  };  
 
   return (
     <View className="flex-1 bg-slate-100">
@@ -419,10 +421,11 @@ export default function Home({ navigation }) {
           </View>
 
           <FlatList
-            data={folders}
-            renderItem={renderItem}
-            keyExtractor={item => item.path}
-          />
+  data={folders}
+  renderItem={renderItem}
+  keyExtractor={item => item.path}
+/>
+
         </View>
       </ScrollView>
     </View>
